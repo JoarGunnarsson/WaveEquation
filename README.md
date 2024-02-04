@@ -6,7 +6,7 @@ This project provides a MATLAB script to numerically solve the wave equation in 
 
 To use the wave equation solver, follow these steps:
 
-1. Open the MATLAB script in a MATLAB environment.
+1. Open the MATLAB script `WaveEquationNumerical.m` in a MATLAB environment.
 
 2. Adjust the parameters in the script to fit your specific problem:
    - `L_x`: Length of the domain in the x-direction.
