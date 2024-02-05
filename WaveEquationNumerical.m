@@ -1,9 +1,8 @@
 %% Compute solution
 % Computes the numerical solution to the wave equation.
-% Can handle both Dirichlet and Neumann boundary conditions
-% (only zero-valued Neumann conditions at this time however).
-% Can handle arbitrary initial conditions, and also implements
-% optional forcing of a wave motion in one corner of the domain,
+% Supports both Dirichlet and Neumann boundary conditions.
+% Also supports arbitrary initial conditions, and implements
+% optional forcing wave motion in one corner of the domain,
 % and an optional energy friction term.
 
 clc, clear, close
@@ -61,11 +60,16 @@ u(end,:,:) = alpha_4;
 for k = 2:N_t
     for j = 2:N_y
         for i = 2:N_x
-%           Neumann boundary counditions:            
-            u(1,j,k) = u(2,j,k);
-            u(end,j,k) = u(end-1,j,k);
-            u(i,1,k) = u(i,2,k);
-            u(i,end,k) = u(i,end-1,k);
+%           Neumann boundary counditions:
+            f_1 = 0;
+            f_2 = 0;
+            f_3 = 0;
+            f_4 = 0;
+            
+            u(i,1,k) = u(i,2,k) + + delta_t * f_1;
+            u(i,end,k) = u(i,end-1,k) + delta_t * f_2;
+            u(1,j,k) = u(2,j,k) + delta_t * f_3;
+            u(end,j,k) = u(end-1,j,k) + delta_t * f_4;
             
             % Does does not change the solution, only makes it look better.
             u(1,1,k) = u(2,2,k);
@@ -73,7 +77,7 @@ for k = 2:N_t
             u(end,1,k) = u(end-1,2,k);
             u(1,end,k) = u(1,end-1,k);
             
-            % Generate wave
+            % Generate wave:
             if (delta_t * k < T / 4)
                 u(2,2,k) = sin(2 * 2 * pi * (delta_t * k) / (T / 4));
             end
@@ -82,6 +86,7 @@ for k = 2:N_t
             x_part = sigma_x * (u(i+1,j,k) - 2*u(i,j,k) + u(i-1,j,k));
             y_part = sigma_y * (u(i,j+1,k) - 2*u(i,j,k) + u(i,j-1,k));
             u(i,j,k+1) = t_part + x_part + y_part;
+            
 %           Introduces an approximative friction loss term:
             u(i,j,k+1) = (u(i,j,k+1) + mu * u(i,j,k-1) * 1/2 * delta_t) / (1 + mu * delta_t / 2);
         end
