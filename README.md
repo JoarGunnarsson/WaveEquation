@@ -1,7 +1,18 @@
 # Wave Equation Numerical Solver
 
-This project provides a MATLAB script to numerically solve the wave equation in a 2D domain. The solver is capable of handling both Dirichlet and Neumann boundary conditions, along with arbitrary initial conditions. Additionally, it supports optional features such as forcing a sinus wave motion in the center of the domain and introducing an optional energy friction term. This script uses the central finite differences scheme. This can all be found in the file `WaveEquationNumerical.m`. This repository also includes an example analytical solution of the wave equation. More information can be found in the file `WaveEquationAnalytical.m`.
+This project provides a MATLAB script to numerically solve the wave equation in a square 2D domain. The solver is capable of handling both Dirichlet and Neumann boundary conditions, along with arbitrary initial conditions. Additionally, it supports optional features such as forcing a sinus wave motion in the center of the domain and introducing an optional energy friction term. This script uses the central finite differences scheme. This can all be found in the file `WaveEquationNumerical.m`. This repository also includes an example analytical solution of the wave equation. More information can be found in the file `WaveEquationAnalytical.m`.
 
+## Partial Differential Equation (PDE)
+The wave equation being solved by this script is a is given by:
+
+![Wave Equation](Images/WaveEquationPDE.png)
+
+where:
+- `u(x, y, t)` is the wave function,
+- `c` is the wave propagation speed,
+- `µ` is a parameter determining the energy loss due to friction,
+- `x` and `y` are spatial coordinates,
+- `t` is time.
 ## Usage
 
 To use the wave equation solver, follow these steps:
