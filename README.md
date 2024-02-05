@@ -30,8 +30,8 @@ To use the wave equation solver, follow these steps:
    - `N_y`: Number of spatial points in the y-direction.
    - `N_t`: Number of time steps.
    - `c`: The wave speed.
-   - Make sure that `stability_constant` is less than 1. This can be changed by modifying the number of spatial points, time steps, and the wave speed.
-   - `mu`: Parameter determining the energy loss due to friction.
+   - `stability_constant`: Has to be smaller than 1. This can be changed by modifying the number of spatial points, the size of the domain, the number of time steps, or the wave speed.
+   - `µ`: Parameter determining the energy loss due to friction.
    - Any additional changes to the boundary- and initial- conditions.
 3. Run the first section of the script to compute the numerical solution to the wave equation.
 4. Run the second section in order to visualize the solution in 3D.
@@ -47,8 +47,4 @@ The second section of the script generates a 3D plot of the wave evolution over 
 ![Example](Images/ExamplePlot.gif)
 ## Additional Notes
 
-- The script provides an example of an initial velocity function (`v`) that you can modify to suit your specific needs.
-
-- The solver supports both Dirichlet and Neumann boundary conditions. You can specify these conditions in the script as needed.
-
-- Optional features, such as forcing a wave motion in the center of the domain and introducing an energy friction term, are demonstrated in the script and can be modified or disabled as required.
+- Optional features, such as forcing a wave motion on the edge of the domain, are demonstrated in the script and can be modified or disabled as required.
