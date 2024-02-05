@@ -3,7 +3,7 @@
 This project provides a MATLAB script to numerically solve the wave equation in a square 2D domain. The solver is capable of handling both Dirichlet and Neumann boundary conditions, along with arbitrary initial conditions. Additionally, it supports optional features such as forcing a sinus wave motion in the center of the domain and introducing an optional energy friction term. This script uses the central finite differences scheme.
 
 ## Partial Differential Equation (PDE)
-The wave equation being solved by this script is a is given by:
+The wave equation being solved by this script is given by:
 
 <img src="Images/WaveEquationPDE.png" alt="Wave Equation with friction" width="200"/>
 
