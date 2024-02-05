@@ -1,6 +1,6 @@
 # Wave Equation Numerical Solver
 
-This project provides a MATLAB script to numerically solve the wave equation in a square 2D domain. The solver is capable of handling both Dirichlet and Neumann boundary conditions, along with arbitrary initial conditions. Additionally, it supports optional features such as forcing a sinus wave motion in the center of the domain and introducing an optional energy friction term. This script uses the central finite differences scheme. This can all be found in the file `WaveEquationNumerical.m`. This repository also includes an example analytical solution of the wave equation. More information can be found in the file `WaveEquationAnalytical.m`.
+This project provides a MATLAB script to numerically solve the wave equation in a square 2D domain. The solver is capable of handling both Dirichlet and Neumann boundary conditions, along with arbitrary initial conditions. Additionally, it supports optional features such as forcing a sinus wave motion in the center of the domain and introducing an optional energy friction term. This script uses the central finite differences scheme.
 
 ## Partial Differential Equation (PDE)
 The wave equation being solved by this script is a is given by:
@@ -12,7 +12,10 @@ where:
 - `c` is the wave propagation speed,
 - `µ` is a parameter determining the energy loss due to friction,
 - `x` and `y` are spatial coordinates,
-- `t` is time.
+- `t` is time,
+- `α₁`, `α₂`, `α₃`, `α₄` are real functions determining the eventual Dirichlet boundary condition,
+- `f₁`, `f₂`, `f₃`, `f₄` are real functions determining the eventual Neumann boundary condition,
+- `g` and `v` are real functions determining the initial condition.
 ## Usage
 
 To use the wave equation solver, follow these steps:
@@ -39,11 +42,12 @@ The first section of the script generates a numerical solution to the wave equat
 
 ## Visualization
 
-The second section of the script script generates a 3D plot of the wave evolution over time.
+The second section of the script generates a 3D plot of the wave evolution over time. An example of this can be seen below.
 
+![Example](Images/ExamplePlot.gif)
 ## Additional Notes
 
-- The script provides an example of an initial velocity function (`v_0`) that you can modify to suit your specific needs.
+- The script provides an example of an initial velocity function (`v`) that you can modify to suit your specific needs.
 
 - The solver supports both Dirichlet and Neumann boundary conditions. You can specify these conditions in the script as needed.
 
