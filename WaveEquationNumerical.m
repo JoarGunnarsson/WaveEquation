@@ -93,7 +93,7 @@ for k = 2:N_t
     end
 end
 
-%% Plot any solution.
+%% Plot the solution.
 close
 sleep_time = 0.1;
 
@@ -128,7 +128,7 @@ for i = 1:t_skip:N_t
     plotz = u(1:x_skip:end,1:y_skip:end,i)';
     set(mySurf,'XData',plotx,'YData',ploty,'ZData',plotz, 'CData', plotz);
     drawnow;
-    pause(delta_t);
+    pause(delta_t*t_skip);
 end
 
 
