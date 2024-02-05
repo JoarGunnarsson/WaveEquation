@@ -7,6 +7,18 @@ The wave equation being solved by this script is a is given by:
 
 ![Wave Equation with friction](Images/WaveEquationPDE.png)
 
+with either Dirichlet boundary conditions:
+
+![Dirichlet boundary conditions](Images/Dirichlet.png)
+
+or Neumann boundary conditions:
+
+![Neumann boundary conditions](Images/Neumann.png)
+
+and initial conditions:
+
+![Initial conditions](Images/InitialConditions.png)
+
 where:
 - `u(x, y, t)` is the wave function,
 - `c` is the wave propagation speed,
