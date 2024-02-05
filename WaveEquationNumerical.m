@@ -15,6 +15,7 @@ N_t = 1000;
 delta_x = L_x / N_x;
 delta_y = L_y / N_y;
 delta_t = T / N_t;
+forced_wave_time = 2;
 
 % Determines the energy loss due to friction. Must be >= 0.
 mu = 0; 
@@ -60,9 +61,20 @@ u(end,:,:) = alpha_4;
 
 % Computing the numerical solution
 for k = 2:N_t
+    % Generate wave:
+    if (delta_t * (k-1) <= forced_wave_time)
+        u(2,2,k) = sin(2 * 2 * pi * (delta_t * (k-1)) / forced_wave_time);
+    end
+    
+    % Does does not change the solution, only makes it look better.
+    u(1,1,k) = u(2,2,k);
+    u(end,end,k) = u(end-1,end-1,k);
+    u(end,1,k) = u(end-1,2,k);
+    u(1,end,k) = u(1,end-1,k);
+    
     for j = 2:N_y
         for i = 2:N_x
-%           Neumann boundary counditions:
+            % Neumann boundary counditions:
             f_1 = 0;
             f_2 = 0;
             f_3 = 0;
@@ -72,17 +84,6 @@ for k = 2:N_t
             u(i,end,k) = u(i,end-1,k) + delta_t * f_2;
             u(1,j,k) = u(2,j,k) + delta_t * f_3;
             u(end,j,k) = u(end-1,j,k) + delta_t * f_4;
-            
-            % Does does not change the solution, only makes it look better.
-            u(1,1,k) = u(2,2,k);
-            u(end,end,k) = u(end-1,end-1,k);
-            u(end,1,k) = u(end-1,2,k);
-            u(1,end,k) = u(1,end-1,k);
-            
-            % Generate wave:
-            if (delta_t * k < T / 4)
-                u(2,2,k) = sin(2 * 2 * pi * (delta_t * k) / (T / 4));
-            end
             
             t_part = 2 * u(i,j,k) - u(i,j,k-1);
             x_part = sigma_x * (u(i+1,j,k) - 2*u(i,j,k) + u(i-1,j,k));
@@ -97,7 +98,6 @@ end
 
 %% Plot the solution.
 close
-sleep_time = 0.1;
 
 % Decreases the number of points to plot, increasing FPS.
 total_time_points = 250;
@@ -115,6 +115,7 @@ zmax = max(max(max(u)))+0.001;
 zmin = min(min(min(u)))-0.001;
 plotx = x_axis(1:x_skip:end);
 ploty = y_axis(1:y_skip:end);
+figure('Position', [0,0, 500, 500])
 mySurf = surf(zeros(2,2),'FaceColor', 'interp', 'EdgeColor','black', 'EdgeAlpha', 0.5);
 
 min_side_length = min(L_x, L_y);
@@ -125,14 +126,18 @@ axis ([0 L_x 0 L_y zmin zmax])
 set(mySurf, 'linestyle', '-')
 xlabel('x')
 ylabel('y')
+% writerObj = VideoWriter('Solution.avi'); % initialize the VideoWriter object
+% open(writerObj);
 for i = 1:t_skip:N_t
     % Transpose u so that the x- and y-axes are shown correctly.
     plotz = u(1:x_skip:end,1:y_skip:end,i)';
     set(mySurf,'XData',plotx,'YData',ploty,'ZData',plotz, 'CData', plotz);
     drawnow;
-    pause(delta_t*t_skip);
+    % F = getframe;           % Capture the frame
+    % writeVideo(writerObj,F)  % add the frame to the movie
+    pause(delta_t * t_skip);
 end
-
+% close(writerObj);
 
 %% Functions
 % Function determining initial velocity.
