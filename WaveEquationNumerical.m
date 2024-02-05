@@ -15,7 +15,7 @@ N_t = 1000;
 delta_x = L_x / N_x;
 delta_y = L_y / N_y;
 delta_t = T / N_t;
-mu = 0; % Determines the energy loss due to friction. Must be >= 0.
+mu = 1; % Determines the energy loss due to friction. Must be >= 0.
 
 c = 2;
 stability_constant = (c*delta_t/delta_x)^2 + (c*delta_t/delta_y)^2;

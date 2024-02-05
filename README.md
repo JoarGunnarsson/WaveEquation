@@ -5,7 +5,7 @@ This project provides a MATLAB script to numerically solve the wave equation in 
 ## Partial Differential Equation (PDE)
 The wave equation being solved by this script is a is given by:
 
-![Wave Equation](Images/WaveEquationPDE.png)
+![Wave Equation with friction](Images/WaveEquationPDE.png)
 
 where:
 - `u(x, y, t)` is the wave function,
