@@ -5,19 +5,22 @@ This project provides a MATLAB script to numerically solve the wave equation in 
 ## Partial Differential Equation (PDE)
 The wave equation being solved by this script is a is given by:
 
-![Wave Equation with friction](Images/WaveEquationPDE.png)
+<img src="Images/WaveEquationPDE.png" alt="Wave Equation with friction" width="200"/>
 
 with either Dirichlet boundary conditions:
 
-![Dirichlet boundary conditions](Images/Dirichlet.png)
+<img src="Images/Dirichlet.png" alt="Dirichlet boundary conditions" width="270"/>
+
 
 or Neumann boundary conditions:
 
-![Neumann boundary conditions](Images/Neumann.png)
+<img src="Images/Neumann.png" alt="Neumann boundary conditions" width="270"/>
+
 
 and initial conditions:
 
-![Initial conditions](Images/InitialConditions.png)
+<img src="Images/InitialConditions.png" alt="Initial conditions" width="130"/>
+
 
 where:
 - `u(x, y, t)` is the wave function,
@@ -56,7 +59,8 @@ The first section of the script generates a numerical solution to the wave equat
 
 The second section of the script generates a 3D plot of the wave evolution over time. An example of this can be seen below.
 
-![Example](Images/ExamplePlot.gif)
+<img src="Images/ExamplePlot.gif" alt="Example gif" width="400"/>
+
 ## Additional Notes
 
 - Optional features, such as forcing a wave motion on the edge of the domain, are demonstrated in the script and can be modified or disabled as required.
