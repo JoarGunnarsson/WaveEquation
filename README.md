@@ -1,6 +1,6 @@
 # Wave Equation Numerical Solver
 
-This project provides a MATLAB script to numerically solve the wave equation in a square 2D domain. The solver is capable of handling both Dirichlet and Neumann boundary conditions, along with arbitrary initial conditions. Additionally, it supports optional features such as forcing a sinus wave motion in the center of the domain and introducing an optional energy friction term. This script uses the central finite differences scheme.
+This project provides a MATLAB script to numerically solve the wave equation in a square 2D domain. The solver is capable of handling Dirichlet, Neumann, and periodic boundary conditions, along with arbitrary initial conditions. Additionally, it supports optional features such as forcing a sinus wave motion in the center of the domain and introducing an optional energy friction term. This script uses the central finite differences scheme.
 
 ## Partial Differential Equation (PDE)
 The wave equation being solved by this script is given by:
@@ -31,6 +31,9 @@ where:
 - `α₁`, `α₂`, `α₃`, `α₄` are real functions determining the eventual Dirichlet boundary condition,
 - `f₁`, `f₂`, `f₃`, `f₄` are real functions determining the eventual Neumann boundary condition,
 - `g` and `v` are real functions determining the initial condition.
+
+For the periodic boundary conditions, the value of `u` on the boundary is set the value on the other side of the boundary. This allows for simulation of a very large domain using very little computation, as long as the domain can be divided into smaller, periodic, cells.
+
 ## Usage
 
 To use the wave equation solver, follow these steps:
@@ -63,4 +66,4 @@ The second section of the script generates a 3D plot of the wave evolution over 
 
 ## Additional Notes
 
-- Optional features, such as forcing a wave motion on the edge of the domain, are demonstrated in the script and can be modified or disabled as required.
+- Optional features, such as forcing a wave motion on the edge of the domain, are demonstrated in the script and can be modified or disabled as required. Furthermore, different boundary conditions can be combined, and also be turned on or off during the simulation.

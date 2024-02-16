@@ -20,6 +20,17 @@ forced_wave_time = 2;
 % Determines the energy loss due to friction. Must be >= 0.
 mu = 0; 
 
+
+% Currently available boundary conditions:
+% Dirichlet boundary conditions, Neumann boundary conditions and 
+% Periodic boundary conditions.
+available_boundary_conditions = ["D", "N", "P"]; 
+boundary_condition_type = "D";
+assert(any(contains(available_boundary_conditions, boundary_condition_type)))
+
+% Set to true to generate wave motion.
+generate_wave = false;
+
 c = 2;
 stability_constant = (c*delta_t/delta_x)^2 + (c*delta_t/delta_y)^2;
 disp("Stability constant: " +num2str(stability_constant))
@@ -49,41 +60,48 @@ end
 
 
 % Dirichlet boundary conditions:
-alpha_1 = 0;
-alpha_2 = 0;
-alpha_3 = 0;
-alpha_4 = 0;
+if (boundary_condition_type == "D")
+    alpha_1 = 0;
+    alpha_2 = 0;
+    alpha_3 = 0;
+    alpha_4 = 0;
 
-u(:,1,:) = alpha_1;
-u(:,end,:) = alpha_2;
-u(1,:,:) = alpha_3;
-u(end,:,:) = alpha_4;
+    u(:,1,:) = alpha_1;
+    u(:,end,:) = alpha_2;
+    u(1,:,:) = alpha_3;
+    u(end,:,:) = alpha_4;
+end
 
 % Computing the numerical solution
 for k = 2:N_t
     % Generate wave:
-    if (delta_t * (k-1) <= forced_wave_time)
-        u(2,2,k) = sin(2 * 2 * pi * (delta_t * (k-1)) / forced_wave_time);
+    if (generate_wave && delta_t * (k-1) <= forced_wave_time)
+        u(round(N_x/2),round(N_y/6),k) = sin(2 * 2 * pi * (delta_t * (k-1)) / forced_wave_time);
     end
-    
-    % Does does not change the solution, only makes it look better.
-    u(1,1,k) = u(2,2,k);
-    u(end,end,k) = u(end-1,end-1,k);
-    u(end,1,k) = u(end-1,2,k);
-    u(1,end,k) = u(1,end-1,k);
-    
+
     for j = 2:N_y
         for i = 2:N_x
-            % Neumann boundary counditions:
-            f_1 = 0;
-            f_2 = 0;
-            f_3 = 0;
-            f_4 = 0;
+            if (boundary_condition_type == "N")
+                % Neumann boundary counditions:
+                f_1 = 0;
+                f_2 = 0;
+                f_3 = 0;
+                f_4 = 0;
+
+                u(i,1,k) = u(i,2,k) + delta_t * f_1;
+                u(i,end,k) = u(i,end-1,k) + delta_t * f_2;
+                u(1,j,k) = u(2,j,k) + delta_t * f_3;
+                u(end,j,k) = u(end-1,j,k) + delta_t * f_4;
+            end
             
-            u(i,1,k) = u(i,2,k) + + delta_t * f_1;
-            u(i,end,k) = u(i,end-1,k) + delta_t * f_2;
-            u(1,j,k) = u(2,j,k) + delta_t * f_3;
-            u(end,j,k) = u(end-1,j,k) + delta_t * f_4;
+            if (boundary_condition_type == "P")
+                % Periodic boundary conditions:
+                u(i, 1, k) = u(i, end-1, k);
+                u(1, j, k) = u(end-1, j, k);
+
+                u(i, end, k) = u(i, 2, k);
+                u(end, j, k) = u(2, j, k);
+            end
             
             t_part = 2 * u(i,j,k) - u(i,j,k-1);
             x_part = sigma_x * (u(i+1,j,k) - 2*u(i,j,k) + u(i-1,j,k));
@@ -94,6 +112,13 @@ for k = 2:N_t
             u(i,j,k+1) = (u(i,j,k+1) + mu * u(i,j,k-1) * 1/2 * delta_t) / (1 + mu * delta_t / 2);
         end
     end
+    
+    % Does does not change the solution, only makes it look better at the
+    % corners.
+    u(1,1,k) = u(2,2,k);
+    u(end,end,k) = u(end-1,end-1,k);
+    u(end,1,k) = u(end-1,2,k);
+    u(1,end,k) = u(1,end-1,k);
 end
 
 %% Plot the solution.
@@ -145,7 +170,7 @@ function v = v(x,y,L_x, L_y)
     v = zeros(length(x), length(y));
     for i = 1:length(x)
          for j = 1:length(y)
-%             v(i,j) =  pulse(x(i)-L_x/2).*pulse(y(j)-L_y/2);
+             %v(i,j) =  0.01*pulse(x(i)-L_x/6).*pulse(y(j)-L_y/6);
 %             v(i,j) = 0;
         end
     end 
